@@ -30,7 +30,7 @@ class raduobutton:
         data = "You have selected Impressive"
         print(f"Test 2: {'PASSED' if text == f'Name:{data}' else 'FALSE'}")
         
-    def clickNo(self):
+    def clickNo(self): # Still not working
         print("Enable 'No' button then select")
         rbNo = self.driver.find_element(By.XPATH, "//div[@class='custom-control disabled custom-radio custom-control-inline']")
         self.driver.execute_script("arguments[0].removeAttribute('disabled')", rbNo)
