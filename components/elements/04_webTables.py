@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 import time
 
 
@@ -84,31 +85,73 @@ class webTables:
     def search(self): # Search from the list data
         self.driver.find_element(By.XPATH, "//input[@id='searchBox']").send_keys("alden")
         
-        search_box = self.driver.find_element(By.XPATH, "//input[@id='searchBox']")
-        search_box.send_keys(Keys.CONTROL + "a") 
-        search_box.send_keys(Keys.DELETE)
+        # search_box = self.driver.find_element(By.XPATH, "//input[@id='searchBox']")
+        # search_box.send_keys(Keys.CONTROL + "a") 
+        # search_box.send_keys(Keys.DELETE)
         
         tRow = self.driver.find_element(By.XPATH, "//*[@class='rt-tr-group'][1]")
-        text = tRow.text.lower()
+        text = tRow.text
         
-        print(f"Test 1: {'PASSED' if "alden" in text else 'FAILED'}")
+        print(f"Test 1: {'PASSED' if "Alden" in text else 'FAILED'}")
 
     def editData(self): # Edit a data from the item
         self.driver.find_element(By.XPATH, "//span[@id='edit-record-1'][1]").click()
         
-    def submitForm():
-        print("Delete a data from the item")
-        
-    def submitForm():
-        print("Get all items from the table")
+        text_fields = [
+            webTables.txt1,
+            webTables.txt2,
+            webTables.txt3,
+            webTables.txt4,
+            webTables.txt5,
+            webTables.txt6 
+        ]
 
-    def submitForm():
-        print("Change number of rows")
+        for field_xpath in text_fields:
+            field = self.driver.find_element(By.XPATH, field_xpath)
+            field.send_keys(Keys.CONTROL + "a") 
+            field.send_keys(Keys.DELETE)
         
+        time.sleep(5)
+        self.driver.find_element(By.XPATH, webTables.txt1).send_keys("Spongebob")
+        self.driver.find_element(By.XPATH, webTables.txt2).send_keys("Squarepants")
+        self.driver.find_element(By.XPATH, webTables.txt3).send_keys("spongebob@gmail.com")
+        self.driver.find_element(By.XPATH, webTables.txt4).send_keys("23")
+        self.driver.find_element(By.XPATH, webTables.txt5).send_keys("25000")
+        self.driver.find_element(By.XPATH, webTables.txt6).send_keys("Finance")
+        
+        self.driver.find_element(By.XPATH, "//button[@id='submit']").click()
+        
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//input[@id='searchBox']").send_keys("Spongebob")
+        
+        tRow = self.driver.find_element(By.XPATH, "//*[@class='rt-tr-group'][1]")
+        text = tRow.text
+        
+        print(f"Test 1: {'PASSED' if "Spongebob" in text else 'FAILED'}")
+        
+    def deleteData(self): # Search from the list data
+        self.driver.find_element(By.XPATH, "//span[@id='delete-record-2']").click() # delete alden in the record
+        
+    def GetRecords(self): # Get all items from the table
+        items = self.driver.find_elements(By.XPATH, "//*[@class='rt-tr-group']")
+        for row in items:  
+            cols = row.find_elements(By.CLASS_NAME, "rt-td")  # Get columns within the current row
+            
+            row_text = " | ".join([col.text.strip() for col in cols])  # Join column texts with " | "
+            print(row_text)  # Print full row text
 
+    def changeRows(self): # Change number of rows
+        Opt = self.driver.find_element(By.XPATH, "//select[@aria-label='rows per page']")
+        time.sleep(3)
+        select = Select(Opt)
+        select.select_by_visible_text("20 rows")
+        
+        rows = self.driver.find_elements(By.XPATH, "//*[@class='rt-tr-group']")
+        items = len(rows)
+        print(f"Test 1: {'PASSED' if items == 20 else 'FAILED'}")
 
 if __name__ == "__main__":
     w = webTables()
     w.setup()
     time.sleep(5)
-    w.search()
+    w.changeRows()

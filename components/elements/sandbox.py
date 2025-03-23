@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import time
 
 class FormValidator:
@@ -28,6 +29,25 @@ class FormValidator:
                 all_valid = False  # If any field is not red, set to False
 
         return all_valid
+    
+    @staticmethod
+    def clear_fields(driver, field_xpaths):
+        """
+        Checks if all specified fields have a red border (error validation).
+        
+        :param driver: Selenium WebDriver instance
+        :param field_xpaths: List of XPaths for the input fields
+        :return: True if all fields show an error, False otherwise
+        
+        usage:
+        fields = [list of text]
+        result = FormValidator.clear_fields(driver, fields)
+        """
+
+        for field_xpath in field_xpaths:
+            field = driver.find_element(By.XPATH, field_xpath)
+            field.send_keys(Keys.CONTROL + "a") 
+            field.send_keys(Keys.DELETE)
     
 
 
@@ -99,11 +119,17 @@ class webTables:
         
         self.driver.find_element(By.XPATH, "//button[@id='submit']").click()
         
-    def submitForm():
-        print("Click add and submit with invalid data")
-        
-    def submitForm():
-        print("Search from the list data")
+    def editData(self): # Edit a data from the item
+        self.driver.find_element(By.XPATH, "//span[@id='edit-record-1'][1]").click()
+        fields = [
+            webTables.txt1,  # First Name
+            webTables.txt2,  # Last Name
+            webTables.txt3,  # Email
+            webTables.txt4,  # Age
+            webTables.txt5,  # Salary
+            webTables.txt6   # Department
+        ]
+        result = FormValidator.clear_fields(self.driver, fields)
         
     def submitForm():
         print("Edit a data from the item")
@@ -123,4 +149,4 @@ if __name__ == "__main__":
     w = webTables()
     w.setup()
     time.sleep(5)
-    w.AddWithoutData()
+    w.editData()
