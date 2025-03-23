@@ -149,9 +149,44 @@ class webTables:
         rows = self.driver.find_elements(By.XPATH, "//*[@class='rt-tr-group']")
         items = len(rows)
         print(f"Test 1: {'PASSED' if items == 20 else 'FAILED'}")
+        
+    def AddMultipleRecords(self):  # Add multiple rows
+        test_data = [
+            ("Alice", "Smith", "alice.smith@example.com", "28", "25000", "HR"),
+            ("Bob", "Johnson", "bob.johnson@example.com", "35", "32000", "Finance"),
+            ("Charlie", "Brown", "charlie.brown@example.com", "40", "45000", "Engineering"),
+            ("Diana", "Prince", "diana.prince@example.com", "30", "50000", "Marketing"),
+            ("Ethan", "Hunt", "ethan.hunt@example.com", "38", "55000", "Security"),
+            ("Fiona", "Davis", "fiona.davis@example.com", "25", "23000", "Design"),
+            ("George", "White", "george.white@example.com", "29", "27000", "Operations"),
+            ("Hannah", "Miller", "hannah.miller@example.com", "31", "29000", "Sales"),
+            ("Ian", "Wright", "ian.wright@example.com", "27", "26000", "Support"),
+            ("Jane", "Doe", "jane.doe@example.com", "24", "22000", "Research")
+        ]
+
+        for data in test_data:
+            self.driver.find_element(By.XPATH, "//button[@id='addNewRecordButton']").click()
+            time.sleep(2)
+
+            self.driver.find_element(By.XPATH, webTables.txt1).send_keys(data[0])  # First Name
+            self.driver.find_element(By.XPATH, webTables.txt2).send_keys(data[1])  # Last Name
+            self.driver.find_element(By.XPATH, webTables.txt3).send_keys(data[2])  # Email
+            self.driver.find_element(By.XPATH, webTables.txt4).send_keys(data[3])  # Age
+            self.driver.find_element(By.XPATH, webTables.txt5).send_keys(data[4])  # Salary
+            self.driver.find_element(By.XPATH, webTables.txt6).send_keys(data[5])  # Department
+        
+            self.driver.find_element(By.XPATH, "//button[@id='submit']").click()
+            time.sleep(2)
+
+    def nextprev(self): # Test the next and prev button
+        # Add the AddMultipleRecords function first
+        self.driver.find_element(By.XPATH, "//button[contains(text(), 'Next')]").click()
+        time.sleep(3)
+        self.driver.find_element(By.XPATH, "//button[contains(text(), 'Previous')]").click()
+
 
 if __name__ == "__main__":
     w = webTables()
     w.setup()
     time.sleep(5)
-    w.changeRows()
+    w.AddMultipleRecords()
