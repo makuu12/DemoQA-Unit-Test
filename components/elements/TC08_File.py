@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-import os
 
 class DondownloadUpload:
     def __init__(self):

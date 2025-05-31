@@ -17,24 +17,29 @@ class raduobutton:
         time.sleep(4)
         self.driver.find_element(By.XPATH, "//label[normalize-space()='Yes']").click()
         time.sleep(4)
-        label = self.driver.find_element(By.XPATH, "//p[@class='mt-3']")
+        label = self.driver.find_element(By.XPATH, "//span[@class='text-success']")
         text = label.text
-        data = "You have selected Yes"
+        data = "Yes"
         print(f"Test 1: {'PASSED' if text == f'Name:{data}' else 'FALSE'}")
     
     def clickImpressive(self):
         self.driver.find_element(By.XPATH, "//label[normalize-space()='Impressive']").click()
         time.sleep(4)
-        label = self.driver.find_element(By.XPATH, "//p[@class='mt-3']")
-        text = label.text
-        data = "You have selected Impressive"
+        label = self.driver.find_element(By.XPATH, "//span[@class='text-success']")
+        text = self.driver.execute_script("return arguments[0].textContent;", label).strip()
+        print(text)
+        data = "Impressive"
         print(f"Test 2: {'PASSED' if text == f'Name:{data}' else 'FALSE'}")
         
     def clickNo(self): # Still not working
         print("Enable 'No' button then select")
         rbNo = self.driver.find_element(By.XPATH, "//div[@class='custom-control disabled custom-radio custom-control-inline']")
-        self.driver.execute_script("arguments[0].removeAttribute('disabled')", rbNo)
-        rbNo.click()
+        self.driver.execute_script("arguments[0].click();", rbNo)
+        # rbNo.click()
+        label = self.driver.find_element(By.XPATH, "//span[@class='text-success']")
+        text = label.text
+        data = "No"
+        print(f"Test 2: {'PASSED' if text == f'Name:{data}' else 'FALSE'}")
 
 if __name__ == "__main__":
     rb = raduobutton()
