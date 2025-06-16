@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
+import os
+
 class DondownloadUpload:
     def __init__(self):
         self.driver = None
@@ -19,11 +21,10 @@ class DondownloadUpload:
     def uploadFile(self): # Upload file
         file_input = self.driver.find_element(By.XPATH, "//input[@id='uploadFile']")
         self.driver.execute_script("arguments[0].scrollIntoView(true);", file_input)
-        file = r"C:\Users\Mark Roel Andaya\Downloads\sampleFile.jpeg"
+        file = os.path.abspath("components/resources/1x1.png")
         file_input.send_keys(file)
         print("file imported")
         
-        path = r"C:\fakepath\sampleFile.jpeg"
 if __name__ == "__main__":
     du = DondownloadUpload()
     du.setup()
