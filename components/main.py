@@ -24,6 +24,7 @@ t = textbox()
 t.setup()
 time.sleep(3)
 t.fillUp_Form()
+t.test_data()
 
 # Output:
 # Name:mark

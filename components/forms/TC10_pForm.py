@@ -29,16 +29,20 @@ class practiceForm:
         time.sleep(5)
         self.driver.find_element(By.XPATH, "//input[@id='userNumber']").send_keys("9091234567")
 
-        bdate = self.driver.find_element(By.XPATH, "//input[@id='dateOfBirthInput']")
-        bdate.clear()
-        date_value = "01 Jan 2000"
-        self.driver.execute_script("document.getElementById('dateOfBirthInput').value = arguments[0]", date_value)
-        # pyautogui.press('esc')
-        self.driver.execute_script("document.querySelector('body').click();")
+        # Datepicker is not working for now
+        # time.sleep(5)
+        # bdate = self.driver.find_element(By.XPATH, "//input[@id='dateOfBirthInput']")
+        # date_value = "01 Jan 2000"
+        # self.driver.execute_script("document.getElementById('dateOfBirthInput').value = arguments[0]", date_value)
+        # time.sleep(2)
+        # bdate.send_keys(Keys.RETURN)
+        # print("date entered")
+        time.sleep(5)
         
         subjects = self.driver.find_element(By.CLASS_NAME, "subjects-auto-complete__value-container")
-        subjects.click()
-        subjects.send_keys("Eng" + Keys.ENTER)
+        # subjects.click()
+        time.sleep(5)
+        subjects.driver.find_element(By.ID, "subjectsInput").send_keys("Eng", Keys.ENTER)
         time.sleep(5)
 
         self.driver.find_element(By.XPATH, "//label[normalize-space()='Sports']").click()

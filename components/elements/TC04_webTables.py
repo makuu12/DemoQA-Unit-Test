@@ -27,7 +27,7 @@ class webTables:
         error = "rgb(220, 53, 69)" # = #dc3545
         
         self.driver.find_element(By.XPATH, "//button[@id='addNewRecordButton']").click()
-        self.driver.find_element(By.XPATH, "//button[@id='submit']").click()
+        self.driver.find_element(By.ID, "submit").click()
         
         time.sleep(2)
 
@@ -165,7 +165,9 @@ class webTables:
         ]
 
         for data in test_data:
-            self.driver.find_element(By.XPATH, "//button[@id='addNewRecordButton']").click()
+            component = self.driver.find_element(By.ID, "addNewRecordButton")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", component)
+            component.click()
             time.sleep(2)
 
             self.driver.find_element(By.XPATH, webTables.txt1).send_keys(data[0])  # First Name
@@ -175,8 +177,12 @@ class webTables:
             self.driver.find_element(By.XPATH, webTables.txt5).send_keys(data[4])  # Salary
             self.driver.find_element(By.XPATH, webTables.txt6).send_keys(data[5])  # Department
         
-            self.driver.find_element(By.XPATH, "//button[@id='submit']").click()
+            component = self.driver.find_element(By.ID, "submit")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", component)
+            component.click()
             time.sleep(2)
+
+            
 
     def nextprev(self): # Test the next and prev button
         # Add the AddMultipleRecords function first
